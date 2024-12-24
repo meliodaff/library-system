@@ -14,7 +14,7 @@ public class Book {
     private String genre;
     private String year;
     private int stock;
-    private String author;
+    private String author; // dapat ata id ng author to noh?
     private String publisher;
 
     // constructor without id for inserting and updating data
