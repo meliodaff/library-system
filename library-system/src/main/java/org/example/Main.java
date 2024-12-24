@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         BookDAO bookDao = new BookDAOImplementation();
 
-        System.out.println(bookDao.getSpecificBook("dsa"));
+        System.out.println(bookDao.getSpecificBook("dsa")); // results to error 
 
 /*
         List<Book> books = bookDao.getBooks();
