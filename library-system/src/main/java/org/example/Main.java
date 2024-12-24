@@ -8,7 +8,6 @@ public class Main {
 
         System.out.println(bookDao.getSpecificBook("dsa")); // results to error
 
-        //dasdsa
 
 /*
         List<Book> books = bookDao.getBooks();
