@@ -14,16 +14,32 @@ public class Book {
     private String genre;
     private String year;
     private int stock;
-    private String author; // dapat ata id ng author to noh?
+    private String author; // taga kuha lang to guys ng pangalan sa db para lang may placeholder, hindi kasi pwedeng id gamitin ditu guys kasi hindi mababasa ng end user
     private String publisher;
 
-    // constructor without id for inserting and updating data
-    public Book(String title, String genre, String year, int stock, String author, String publisher){
+    private int authorId; // eto para pang update ng author sa db
+    private int publisherId; // '' publisher sa db
+
+    // constructor for inserting book information
+    public Book(String title, String genre, String year, int stock, int authorId, int publisherId){
         this.title = title;
         this.genre = genre;
         this.year = year;
         this.stock = stock;
-        this.author = author;
-        this.publisher = publisher;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
     }
+
+    // constructor for updating book information
+    public Book(int id, String title, String genre, String year, int stock, int authorId, int publisherId){
+        // ano ba mas ideal guys? sa dulo yung id kasi diba sa query ng UPDATE na sa dulo yung WHERE clause para sa id
+        this.id = id;
+        this.title = title;
+        this.genre = genre;
+        this.year = year;
+        this.stock = stock;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
+    }
+
 }

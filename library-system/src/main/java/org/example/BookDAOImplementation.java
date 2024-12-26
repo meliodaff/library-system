@@ -1,23 +1,18 @@
 package org.example;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookDAOImplementation implements BookDAO{
-    public static final String URL = "jdbc:mysql://localhost:3306/library_db";
-    public static final String USERNAME = "root";
-    public static final String PASSWORD = "";
+    Database database = new Database();
 
-
-    public Connection getConnection() throws Exception{
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
-    }
     public List<Book> getBooks(){
         List<Book> books = new ArrayList<>();
         String query = "CALL getBooks()";
         Book book = null;
-        try(Connection connection = getConnection();
+        try(Connection connection = database.getConnection();
             Statement statement = connection.createStatement();){
 
             ResultSet result = statement.executeQuery(query);
@@ -43,7 +38,7 @@ public class BookDAOImplementation implements BookDAO{
     public Book getSpecificBook(int id){
         String query = "CALL getSpecificBook(?)";
         Book book = null;
-        try(Connection connection = getConnection();
+        try(Connection connection = database.getConnection();
             CallableStatement statement = connection.prepareCall(query);){
             statement.setInt(1, id);
 
@@ -74,5 +69,66 @@ public class BookDAOImplementation implements BookDAO{
 
         return null;
     } // to prevent the user from typing String instead of int. can be better
+    public boolean addBook(Book book){
+        String query = "INSERT INTO books (title, genre, year, stock, author_id, publisher_id) VALUES (?, ?, ?, ?, ?, ?)";
 
+        try(Connection connection = database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);){
+
+            statement.setString(1, book.getTitle());
+            statement.setString(2, book.getGenre());
+            statement.setString(3, book.getYear());
+            statement.setInt(4, book.getStock());
+            statement.setInt(5, book.getAuthorId());
+            statement.setInt(6, book.getPublisherId());
+
+            int rowsInserted = statement.executeUpdate();
+
+            return rowsInserted > 0;
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    public boolean updateBook(Book book){
+        String query = "UPDATE books SET title = ?, genre = ?, year = ?, stock = ?, author_id = ?, publisher_id = ? WHERE id = ?";
+
+        try(Connection connection = database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);){
+
+            statement.setString(1, book.getTitle());
+            statement.setString(2, book.getGenre());
+            statement.setString(3, book.getYear());
+            statement.setInt(4, book.getStock());
+            statement.setInt(5, book.getAuthorId());
+            statement.setInt(6, book.getPublisherId());
+            statement.setInt(7, book.getId());
+
+            int rowsUpdated = statement.executeUpdate();
+            return rowsUpdated > 0;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    return false;
+    }
+    public boolean deleteBook(int id){
+        String query = "DELETE FROM books WHERE id = ?";
+
+        try(Connection connection = database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)){
+
+            statement.setInt(1, id);
+            int rowsDeleted = statement.executeUpdate();
+
+            return rowsDeleted > 0;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
