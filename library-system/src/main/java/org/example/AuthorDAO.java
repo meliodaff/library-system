@@ -10,4 +10,6 @@ public interface AuthorDAO {
     boolean deleteAuthor(int id);
 
 
+    List<Author> getAuthorBooks(int id);
+
 }

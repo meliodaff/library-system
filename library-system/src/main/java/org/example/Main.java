@@ -8,17 +8,28 @@ public class Main {
         AuthorDAO authorDao = new AuthorDAOImplementation();
 
 
-        boolean result = authorDao.deleteAuthor(4);
-        System.out.println(result);
-        List<Author> authors = authorDao.getAuthors();
+        Author author1 = new Author("Kendrick Lamar", "lamar@gmail.com");
+        Book book1 = new Book("money trees", "music", "2024-12-02", 10, 7, 3);
 
-        for(Author author : authors) {
-            System.out.println("Author ID: " + author.getId());
-            System.out.println("Name: " + author.getName());
-            System.out.println("Email: " + author.getEmail());
-            System.out.println("--------------");
+
+
+
+        List<Author> authors = authorDao.getAuthorBooks(7);
+        int i = 0;
+        for(Author author : authors){
+            if(i == 0){
+                System.out.println("---------------------------");
+                System.out.println("Author's name: " + author.getName());
+                System.out.println("Email: " + author.getEmail());
+                i++;
+            }
+            System.out.println("---------------------------");
+            System.out.println("Title: " + author.getTitle());
+            System.out.println("Genre: " + author.getGenre());
+            System.out.println("Stock: " + author.getStock());
+            System.out.println("Year: " + author.getYear());
+            System.out.println("---------------------------");
         }
-
 
 /*
         List<Book> books = bookDao.getBooks();
@@ -34,6 +45,26 @@ public class Main {
         }
 
  */
+
+
+
+
+
+        /*
+        List<Author> authors = authorDao.getAuthors();
+        for(Author author : authors) {
+            System.out.println("Author ID: " + author.getId());
+            System.out.println("Name: " + author.getName());
+            System.out.println("Email: " + author.getEmail());
+            System.out.println("--------------");
+        }
+
+         */
+
+
+
+
+
 
 
 

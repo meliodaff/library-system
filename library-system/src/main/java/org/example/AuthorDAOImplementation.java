@@ -1,9 +1,6 @@
 package org.example;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +93,6 @@ public class AuthorDAOImplementation implements AuthorDAO {
         }
         return false;
     }
-
     public boolean deleteAuthor(int id){
         String query = "DELETE FROM authors WHERE id = ?";
 
@@ -115,5 +111,31 @@ public class AuthorDAOImplementation implements AuthorDAO {
         return false;
     }
 
+    public List<Author> getAuthorBooks(int authorId){
+        String query = "CALL getAuthorBooks(?)";
+        List<Author> authors = new ArrayList<>();
+        Author author = null;
+        try(Connection connection = database.getConnection();
+            CallableStatement statement = connection.prepareCall(query);){
 
+            statement.setInt(1, authorId);
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                author = new Author();
+                author.setName(result.getString("name"));
+                author.setEmail(result.getString("email"));
+                author.setTitle(result.getString("title"));
+                author.setGenre(result.getString("genre"));
+                author.setStock(result.getInt("stock"));
+                author.setYear(result.getString("year"));
+                authors.add(author);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return authors;
+    }
 }
