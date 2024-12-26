@@ -123,13 +123,20 @@ public class AuthorDAOImplementation implements AuthorDAO {
             ResultSet result = statement.executeQuery();
 
             while(result.next()){
+
+                List<Book> books = new ArrayList<>();
+                Book book = new Book();
+
                 author = new Author();
                 author.setName(result.getString("name"));
                 author.setEmail(result.getString("email"));
-                author.setTitle(result.getString("title"));
-                author.setGenre(result.getString("genre"));
-                author.setStock(result.getInt("stock"));
-                author.setYear(result.getString("year"));
+                book.setTitle(result.getString("title"));
+                book.setGenre(result.getString("genre"));
+                book.setStock(result.getInt("stock"));
+                book.setYear(result.getString("year"));
+
+                books.add(book);
+                author.setBooks(books);
                 authors.add(author);
             }
         }

@@ -2,6 +2,8 @@ package org.example;
 
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 @Setter
@@ -13,10 +15,7 @@ public class Author {
     private String name;
     private String email;
 
-    private String title;
-    private String genre;
-    private int stock;
-    private String year;
+    private List<Book> books;
 
     // constructor for adding author record
     public Author(String name, String email){

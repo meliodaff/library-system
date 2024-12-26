@@ -15,6 +15,7 @@ public class Main {
 
 
         List<Author> authors = authorDao.getAuthorBooks(7);
+
         int i = 0;
         for(Author author : authors){
             if(i == 0){
@@ -24,10 +25,7 @@ public class Main {
                 i++;
             }
             System.out.println("---------------------------");
-            System.out.println("Title: " + author.getTitle());
-            System.out.println("Genre: " + author.getGenre());
-            System.out.println("Stock: " + author.getStock());
-            System.out.println("Year: " + author.getYear());
+            System.out.println(author.getBooks());
             System.out.println("---------------------------");
         }
 
