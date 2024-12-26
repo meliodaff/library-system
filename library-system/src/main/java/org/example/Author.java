@@ -15,7 +15,7 @@ public class Author {
     private String name;
     private String email;
 
-    private List<Book> books;
+    private List<Book> books; // comprehend this more bialen xD
 
     // constructor for adding author record
     public Author(String name, String email){
