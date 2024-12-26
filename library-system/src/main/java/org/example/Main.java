@@ -11,20 +11,17 @@ public class Main {
         Author author1 = new Author("Kendrick Lamar", "lamar@gmail.com");
         Book book1 = new Book("money trees", "music", "2024-12-02", 10, 7, 3);
 
-
-
-
         List<Author> authors = authorDao.getAuthorBooks(7);
 
         int i = 0;
         for(Author author : authors){
             if(i == 0){
-                System.out.println("---------------------------");
-                System.out.println("Author's name: " + author.getName());
-                System.out.println("Email: " + author.getEmail());
+                System.out.println("---------------------------------------");
+                System.out.println("|| Author's name: " + author.getName() + "     ||");
+                System.out.println("|| Email: " + author.getEmail() + "            ||");
+                System.out.println("---------------------------------------");
                 i++;
             }
-            System.out.println("---------------------------");
             System.out.println(author.getBooks());
             System.out.println("---------------------------");
         }

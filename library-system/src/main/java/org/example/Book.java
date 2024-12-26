@@ -41,5 +41,9 @@ public class Book {
         this.authorId = authorId;
         this.publisherId = publisherId;
     }
-
+    @Override
+    public String toString() {
+        return "Title: " + title + "\n Genre: " + genre + "\n Year: " + year + "\n Stock: " + stock;
+        // di ko to gets guys, kinuha ko lang kay chatgpt xD di kasi cute pag display pag walang gantu eh
+    }
 }

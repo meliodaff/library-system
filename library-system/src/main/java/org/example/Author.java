@@ -22,4 +22,5 @@ public class Author {
         this.name = name;
         this.email = email;
     }
+
 }
