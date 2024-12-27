@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDAOImplementation implements BookDAO {
-    Database database = new Database();
+    private Database database;
+
+    public BookDAOImplementation(Database database){
+        this.database = database;
+    }
 
     @Override
     public List<Book> getBooks(){

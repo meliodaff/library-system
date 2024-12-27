@@ -20,6 +20,8 @@ public class Book {
     private int authorId; // eto para pang update ng author sa db
     private int publisherId; // '' publisher sa db
 
+
+
     // constructor for inserting book information
     public Book(String title, String genre, String year, int stock, int authorId, int publisherId){
         this.title = title;

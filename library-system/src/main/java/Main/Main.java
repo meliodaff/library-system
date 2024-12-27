@@ -2,6 +2,7 @@ package Main;
 
 import Dao.AuthorDAO;
 import Dao.BookDAO;
+import Database.Database;
 import Implementation.AuthorDAOImplementation;
 import Implementation.BookDAOImplementation;
 import Model.Author;
@@ -11,7 +12,8 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        BookDAO bookDao = new BookDAOImplementation();
+        Database database = new Database();
+        BookDAO bookDao = new BookDAOImplementation(database);
         AuthorDAO authorDao = new AuthorDAOImplementation();
 
         Author author1 = new Author("Kendrick Lamar", "lamar@gmail.com");
