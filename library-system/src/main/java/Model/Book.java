@@ -15,10 +15,13 @@ public class Book {
     private String year;
     private int stock;
     private String author; // taga kuha lang to guys ng pangalan sa db para lang may placeholder, hindi kasi pwedeng id gamitin ditu guys kasi hindi mababasa ng end user
-    private String publisher;
+    private String publisher; // parang kaya pa to i improve guys or pwede na to? baka may ibang approach
+                            // pa kayu syug para sa variable ng author at publisher names
 
-    private int authorId; // eto para pang update ng author sa db
-    private int publisherId; // '' publisher sa db
+
+    private int authorId; // eto para pang update at pang inset ng author sa db gamit and id nila
+    private int publisherId; // pero pwede rin siguro names nila gamitin kaso baka may kaparehas kasi eh kaya baka tagelidchhi
+                        // or baka may approach kayu nah iba
 
 
 
