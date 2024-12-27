@@ -1,6 +1,5 @@
 package org.example;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.List;
 public class BookDAOImplementation implements BookDAO{
     Database database = new Database();
 
+    @Override
     public List<Book> getBooks(){
         List<Book> books = new ArrayList<>();
         String query = "CALL getBooks()";
@@ -35,6 +35,8 @@ public class BookDAOImplementation implements BookDAO{
         }
         return books;
     }
+
+    @Override
     public Book getSpecificBook(int id){
         String query = "CALL getSpecificBook(?)";
         Book book = null;
@@ -61,6 +63,8 @@ public class BookDAOImplementation implements BookDAO{
         }
         return book;
     }
+
+    @Override
     public Book getSpecificBook(String word){
 
         if(true){
@@ -69,6 +73,8 @@ public class BookDAOImplementation implements BookDAO{
 
         return null;
     } // to prevent the user from typing String instead of int. can be better
+
+    @Override
     public boolean addBook(Book book){
         String query = "INSERT INTO books (title, genre, year, stock, author_id, publisher_id) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -93,6 +99,8 @@ public class BookDAOImplementation implements BookDAO{
 
         return false;
     }
+
+    @Override
     public boolean updateBook(Book book){
         String query = "UPDATE books SET title = ?, genre = ?, year = ?, stock = ?, author_id = ?, publisher_id = ? WHERE id = ?";
 
@@ -115,6 +123,8 @@ public class BookDAOImplementation implements BookDAO{
         }
     return false;
     }
+
+    @Override
     public boolean deleteBook(int id){
         String query = "DELETE FROM books WHERE id = ?";
 

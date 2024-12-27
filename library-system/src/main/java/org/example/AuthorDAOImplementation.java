@@ -6,6 +6,8 @@ import java.util.List;
 
 public class AuthorDAOImplementation implements AuthorDAO {
     Database database = new Database();
+
+    @Override
     public List<Author> getAuthors(){
         String query = "SELECT * FROM authors";
         List<Author> authors = new ArrayList<>();
@@ -31,6 +33,7 @@ public class AuthorDAOImplementation implements AuthorDAO {
     return authors;
     }
 
+    @Override
     public Author getSpecificAuthor(int id){
         String query = "SELECT * FROM authors WHERE id = ?";
         Author author = null;
@@ -58,6 +61,8 @@ public class AuthorDAOImplementation implements AuthorDAO {
         }
         return author;
     }
+
+    @Override
     public boolean addAuthor(Author author){
         String query = "INSERT INTO authors (name, email) VALUES (?, ?)";
 
@@ -76,6 +81,8 @@ public class AuthorDAOImplementation implements AuthorDAO {
         }
         return false;
     }
+
+    @Override
     public boolean updateAuthor(Author author){
         String query = "UPDATE authors SET name = ?, email = ? WHERE id = ?";
         try(Connection connection = database.getConnection();
@@ -93,6 +100,8 @@ public class AuthorDAOImplementation implements AuthorDAO {
         }
         return false;
     }
+
+    @Override
     public boolean deleteAuthor(int id){
         String query = "DELETE FROM authors WHERE id = ?";
 
@@ -111,6 +120,7 @@ public class AuthorDAOImplementation implements AuthorDAO {
         return false;
     }
 
+    @Override
     public List<Author> getAuthorBooks(int authorId){
         String query = "CALL getAuthorBooks(?)";
         List<Author> authors = new ArrayList<>();
