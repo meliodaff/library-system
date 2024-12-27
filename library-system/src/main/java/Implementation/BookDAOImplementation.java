@@ -1,10 +1,14 @@
-package org.example;
+package Implementation;
+
+import Dao.BookDAO;
+import Database.Database;
+import Model.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDAOImplementation implements BookDAO{
+public class BookDAOImplementation implements BookDAO {
     Database database = new Database();
 
     @Override

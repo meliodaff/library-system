@@ -1,4 +1,6 @@
-package org.example;
+package Dao;
+
+import Model.Author;
 
 import java.util.List;
 

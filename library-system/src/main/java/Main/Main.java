@@ -1,4 +1,11 @@
-package org.example;
+package Main;
+
+import Dao.AuthorDAO;
+import Dao.BookDAO;
+import Implementation.AuthorDAOImplementation;
+import Implementation.BookDAOImplementation;
+import Model.Author;
+import Model.Book;
 
 import java.util.List;
 
@@ -6,7 +13,6 @@ public class Main {
     public static void main(String[] args) {
         BookDAO bookDao = new BookDAOImplementation();
         AuthorDAO authorDao = new AuthorDAOImplementation();
-
 
         Author author1 = new Author("Kendrick Lamar", "lamar@gmail.com");
         Book book1 = new Book("money trees", "music", "2024-12-02", 10, 7, 3);

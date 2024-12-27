@@ -1,4 +1,9 @@
-package org.example;
+package Implementation;
+
+import Dao.AuthorDAO;
+import Database.Database;
+import Model.Author;
+import Model.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,7 +29,6 @@ public class AuthorDAOImplementation implements AuthorDAO {
                 author.setEmail(result.getString("email"));
                 authors.add(author);
             }
-
         }
         catch (Exception e){
             e.printStackTrace();

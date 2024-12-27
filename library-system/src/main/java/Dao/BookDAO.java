@@ -1,4 +1,6 @@
-package org.example;
+package Dao;
+
+import Model.Book;
 
 import java.util.List;
 
