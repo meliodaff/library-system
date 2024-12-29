@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
-public class Publisher extends Author {
+public class    Publisher extends Author {
 
     private String address;
 
