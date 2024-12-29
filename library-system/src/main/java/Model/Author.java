@@ -22,5 +22,8 @@ public class Author {
         this.name = name;
         this.email = email;
     }
-
+    @Override
+    public String toString(){
+        return " " + books;
+    }
 }
