@@ -37,7 +37,8 @@ public class Main {
                         else if (chooseBooksDashboard == 2){
                             scanner.next(); // consume the buffer line
                             System.out.print("Book ID: ");
-                            System.out.println(bookDao.getSpecificBook(scanner.nextByte())); // change this if ever the records of book reach hundreds
+                            System.out.println(bookDao.getSpecificBook(scanner.nextByte()));// change this if ever the records of book reach hundreds
+                            scanner.next();
                             System.out.println("-------------------------");
                         }
                         else if (chooseBooksDashboard == 3) {
@@ -46,7 +47,9 @@ public class Main {
                             else System.out.println("An error has occurred");
                         }
                         else if (chooseBooksDashboard == 4){
-
+                            Book book = bookDao.createUpdateBook(scanner);
+                            if(bookDao.updateBook(book)) System.out.println("Book ID " + book.getId() + " Updated Successfully");
+                            else System.out.println("An error has occurred");
                         }
 
                         else if (chooseBooksDashboard == 6) {
