@@ -14,7 +14,7 @@ public class AuthorDAOImplementation implements AuthorDAO {
 
     @Override
     public List<Author> getAuthors(){
-        String query = "SELECT * FROM authors";
+        String query = "SELECT * FROM authors ORDER BY name ASC";
         List<Author> authors = new ArrayList<>();
         Author author = null;
         try(Connection connection = database.getConnection();

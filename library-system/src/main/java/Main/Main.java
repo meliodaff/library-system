@@ -21,10 +21,9 @@ public class Main {
 
         while(true){
         int chooseDashboard = adminDAO.frontDashboard();
-        // Ensure user is logged in before proceeding
         if(chooseDashboard == 1){
             if (adminDAO.loginDashboard() == null) {
-                throw new IllegalArgumentException("Invalid credentials");
+                throw new IllegalArgumentException("Username does not exist");
             }
             System.out.println("Login successful!");
             while(true) {
@@ -34,7 +33,23 @@ public class Main {
                         byte chooseBooksDashboard = adminDAO.booksDashboard();
                         if (chooseBooksDashboard == 1) {
                             adminDAO.displayBooks(bookDao.getBooks());
-                        } else if (chooseBooksDashboard == 6) {
+                        }
+                        else if (chooseBooksDashboard == 2){
+                            scanner.next(); // consume the buffer line
+                            System.out.print("Book ID: ");
+                            System.out.println(bookDao.getSpecificBook(scanner.nextByte())); // change this if ever the records of book reach hundreds
+                            System.out.println("-------------------------");
+                        }
+                        else if (chooseBooksDashboard == 3) {
+                            Book book = bookDao.createBook(scanner);
+                            if(bookDao.addBook(book)) System.out.println("Added successfully");
+                            else System.out.println("An error has occurred");
+                        }
+                        else if (chooseBooksDashboard == 4){
+
+                        }
+
+                        else if (chooseBooksDashboard == 6) {
                             break;
                         }
                     }

@@ -7,9 +7,11 @@ import Model.Book;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BookDAOImplementation implements BookDAO {
     private Database database;
+
 
     public BookDAOImplementation(Database database){
         this.database = database;
@@ -72,6 +74,7 @@ public class BookDAOImplementation implements BookDAO {
         return book;
     }
 
+    /*
     @Override
     public Book getSpecificBook(String word){
 
@@ -81,7 +84,7 @@ public class BookDAOImplementation implements BookDAO {
 
         return null;
     } // to prevent the user from typing String instead of int. can be better
-
+     */
     @Override
     public boolean addBook(Book book){
         String query = "INSERT INTO books (title, genre, year, stock, author_id, publisher_id) VALUES (?, ?, ?, ?, ?, ?)";
@@ -107,6 +110,25 @@ public class BookDAOImplementation implements BookDAO {
 
         return false;
     }
+
+    @Override
+    public Book createBook(Scanner scanner){
+        System.out.print("Book title: ");
+        String title = scanner.nextLine();
+        System.out.print("Book genre: ");
+        String genre = scanner.nextLine();
+        System.out.print("Book year (yyyy-mm-dd): ");
+        String year = scanner.nextLine();
+        System.out.print("Stock: ");
+        short stock = scanner.nextShort();
+        System.out.print("Author ID: ");
+        short authorId = scanner.nextShort();
+        System.out.print("Publisher ID: ");
+        short publisherId = scanner.nextShort();
+        Book book = new Book(title, genre, year, stock, authorId, publisherId);
+        return book;
+        }
+
 
     @Override
     public boolean updateBook(Book book){
