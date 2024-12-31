@@ -40,6 +40,7 @@ public class Main {
                         else if (chooseBooksDashboard == 2){
                             System.out.print("Book ID: ");
                             System.out.println(bookDao.getSpecificBook(scanner.nextByte()));// change this if ever the records of book reach hundreds
+                            // the adminDAOImplementation handles the rendering for input while in here, this handles itself's rendering
                             System.out.println("-------------------------");
                         }
                         else if (chooseBooksDashboard == 3) {
