@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class BookDAOImplementation implements BookDAO {
     private Database database;
 
-
     public BookDAOImplementation(Database database){
         this.database = database;
     }

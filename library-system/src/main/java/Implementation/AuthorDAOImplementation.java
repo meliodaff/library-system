@@ -12,6 +12,9 @@ import java.util.Scanner;
 
 public class AuthorDAOImplementation implements AuthorDAO {
     Database database = new Database();
+    public AuthorDAOImplementation(Database database){
+        this.database = database;
+    }
 
     @Override
     public List<Author> getAuthors(){
