@@ -1,5 +1,6 @@
 package Dao;
 import Model.Admin;
+import Model.Author;
 import Model.Book;
 import java.util.List;
 
@@ -10,8 +11,12 @@ public interface AdminDAO {
     byte adminDashboard();
     byte frontDashboard();
     byte booksDashboard();
-    void authorsDashboard();
+    byte authorsDashboard();
     void publishersDashboard();
     void displayBooks(List<Book> books);
+    void displayAuthors(List<Author> authors);
+    void displaySpecificAuthor(Author author);
+    void displayAuthorBooks(List<Author> author);
+
     void registerDashboard();
 }

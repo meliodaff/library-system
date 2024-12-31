@@ -8,6 +8,7 @@ import Model.Book;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class AuthorDAOImplementation implements AuthorDAO {
     Database database = new Database();
@@ -87,6 +88,16 @@ public class AuthorDAOImplementation implements AuthorDAO {
     }
 
     @Override
+    public Author createAuthor(Scanner scanner){
+        System.out.print("Author's name: ");
+        String name = scanner.nextLine();
+        System.out.print("Author's email: ");
+        String email = scanner.nextLine();
+        Author author = new Author(name, email);
+        return author;
+    }
+
+    @Override
     public boolean updateAuthor(Author author){
         String query = "UPDATE authors SET name = ?, email = ? WHERE id = ?";
         try(Connection connection = database.getConnection();
@@ -103,6 +114,17 @@ public class AuthorDAOImplementation implements AuthorDAO {
             e.printStackTrace();
         }
         return false;
+    }
+    public Author createUpdateAuthor(Scanner scanner){
+        System.out.print("Author ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Author's name: ");
+        String name = scanner.nextLine();
+        System.out.print("Author's email: ");
+        String email = scanner.nextLine();
+        Author author = new Author(id, name, email);
+        return author;
     }
 
     @Override

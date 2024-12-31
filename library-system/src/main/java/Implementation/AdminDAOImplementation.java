@@ -3,12 +3,14 @@ import Dao.AdminDAO;
 import Dao.BookDAO;
 import Database.Database;
 import Model.Admin;
+import Model.Author;
 import Model.Book;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class AdminDAOImplementation implements AdminDAO {
@@ -53,6 +55,31 @@ public class AdminDAOImplementation implements AdminDAO {
 
     }
 
+
+    @Override
+    public byte adminDashboard(){
+        System.out.println("Book Buddy");
+        System.out.println("[1] Books");
+        System.out.println("[2] Authors");
+        System.out.println("[3] Publishers");
+        System.out.println("[4] Logout");
+        byte choice = scanner.nextByte();
+        return choice;
+    }
+
+    public byte booksDashboard(){
+        System.out.println("++ Books ++");
+        System.out.println("[1] View Books");
+        System.out.println("[2] View Specific Book");
+        System.out.println("[3] Add Book");
+        System.out.println("[4] Update Book");
+        System.out.println("[5] Delete Book");
+        System.out.println("[6] Back");
+        System.out.println("-------------------------");
+        byte choice = scanner.nextByte();
+        scanner.nextLine();
+        return choice;
+    }
     @Override
     public void displayBooks(List<Book> books){
         for(Book book : books){
@@ -67,31 +94,52 @@ public class AdminDAOImplementation implements AdminDAO {
         }
     }
 
-    @Override
-    public byte adminDashboard(){
-        System.out.println("Book Buddy");
-        System.out.println("[1] Books");
-        System.out.println("[2] Authors");
-        System.out.println("[3] Publishers");
-        System.out.println("[4] Logout");
+    public byte authorsDashboard(){
+        System.out.println("++ Authors ++");
+        System.out.println("[1] View Authors");
+        System.out.println("[2] View Specific Author");
+        System.out.println("[3] View Author Books");
+        System.out.println("[4] Add Author");
+        System.out.println("[5] Update Author");
+        System.out.println("[6] Delete Author");
+        System.out.println("[7] Back");
+        System.out.println("-------------------------");
         byte choice = scanner.nextByte();
+        scanner.nextLine();
         return choice;
     }
-
-    public byte booksDashboard(){
-            System.out.println("Books");
-            System.out.println("[1] View Books");
-            System.out.println("[2] View Specific Book");
-            System.out.println("[3] Add Book");
-            System.out.println("[4] Update Book");
-            System.out.println("[5] Delete Book");
-            System.out.println("[6] Back");
-            return scanner.nextByte();
-
+    @Override
+    public void displayAuthors(List<Author> authors){
+        for(Author author : authors){
+            System.out.println("Author's ID: " + author.getId());
+            System.out.println("Author's name: " + author.getName());
+            System.out.println("Author's email: " + author.getEmail());
+            System.out.println("-------------------------------------");
+        }
     }
 
-    public void authorsDashboard(){
-        System.out.println("Authors");
+    @Override
+    public void displaySpecificAuthor(Author author){
+        System.out.println("Author's ID: " + author.getId());
+        System.out.println("Author's name: " + author.getName());
+        System.out.println("Author's email: " + author.getEmail());
+    }
+    @Override
+    public void displayAuthorBooks(List<Author> author){
+        byte i = 1;
+        if(author == null || author.isEmpty()){ // i think isEmpty can handle this expression
+            System.out.println("Author has no books");
+        }
+        for(Author authorBooks : author){
+            if(i > 0){
+                System.out.println("Author name: " + authorBooks.getName());
+                System.out.println("Author email: " + authorBooks.getEmail());
+                i--;
+            }
+            System.out.println("------------------");
+            System.out.println(authorBooks.getBooks());
+            System.out.println("------------------");
+        }
     }
 
     public void publishersDashboard(){

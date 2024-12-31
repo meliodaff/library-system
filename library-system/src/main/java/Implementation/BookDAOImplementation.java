@@ -159,10 +159,9 @@ public class BookDAOImplementation implements BookDAO {
 
     @Override
     public Book createUpdateBook(Scanner scanner){
-        scanner.next();
         System.out.print("Book ID: ");
         int bookId = scanner.nextInt();
-        scanner.next();
+        scanner.nextLine();
         Book book = createBook(scanner);
         book.setId(bookId);
         return book;
