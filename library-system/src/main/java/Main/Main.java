@@ -4,6 +4,9 @@ import Dao.AdminDAO;
 import Dao.AuthorDAO;
 import Dao.BookDAO;
 import Dao.PublisherDAO;
+import Dashboard.AuthorsDashboard;
+import Dashboard.BooksDashboard;
+import Dashboard.PublishersDashboard;
 import Database.Database;
 import Implementation.AdminDAOImplementation;
 import Implementation.AuthorDAOImplementation;
@@ -24,6 +27,9 @@ public class Main {
         PublisherDAO publisherDAO = new PublisherDAOImplementation(database);
         Scanner scanner = new Scanner(System.in);
         AdminDAO adminDAO = new AdminDAOImplementation();
+        BooksDashboard booksDashboard = new BooksDashboard();
+        AuthorsDashboard authorsDashboard = new AuthorsDashboard();
+        PublishersDashboard publishersDashboard = new PublishersDashboard();
 
         while(true){
         int chooseDashboard = adminDAO.frontDashboard();
@@ -36,9 +42,9 @@ public class Main {
                 byte choiceAdminDashboard = adminDAO.adminDashboard();
                 if (choiceAdminDashboard == 1) {
                     while (true) {
-                        byte chooseBooksDashboard = adminDAO.booksDashboard();
+                        byte chooseBooksDashboard = booksDashboard.booksDashboard();
                         if (chooseBooksDashboard == 1) {
-                            adminDAO.displayBooks(bookDao.getBooks());
+                            booksDashboard.displayBooks(bookDao.getBooks());
                         }
                         else if (chooseBooksDashboard == 2){
                             System.out.print("Book ID: ");
@@ -69,23 +75,23 @@ public class Main {
                     }
                 } else if (choiceAdminDashboard == 2) {
                     while(true){
-                    byte chooseAuthorsDashboard = adminDAO.authorsDashboard();
+                    byte chooseAuthorsDashboard = authorsDashboard.authorsDashboard();
                     if(chooseAuthorsDashboard == 1){
                        List<Author> author = authorDao.getAuthors();
-                       adminDAO.displayAuthors(author);
+                       authorsDashboard.displayAuthors(author);
                     }
                     else if (chooseAuthorsDashboard == 2){
                         System.out.print("Author ID: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         Author author = authorDao.getSpecificAuthor(id);
-                        adminDAO.displaySpecificAuthor(author);
+                        authorsDashboard.displaySpecificAuthor(author);
                     }
                     else if (chooseAuthorsDashboard == 3){
                         System.out.print("Book ID: ");
                         int id = scanner.nextInt();
                         List<Author> author = authorDao.getAuthorBooks(id);
-                        adminDAO.displayAuthorBooks(author);
+                        authorsDashboard.displayAuthorBooks(author);
                     }
                     else if (chooseAuthorsDashboard == 4) {
                         Author author = authorDao.createAuthor(scanner);
@@ -113,23 +119,23 @@ public class Main {
 
                 } else if (choiceAdminDashboard == 3) {
                     while(true) {
-                        byte choicePublisherDashboard = adminDAO.publishersDashboard();
+                        byte choicePublisherDashboard = publishersDashboard.publishersDashboard();
                         if (choicePublisherDashboard == 1) {
                             List<Publisher> publisher = publisherDAO.getPublishers();
-                            adminDAO.displayPublishers(publisher);
+                            publishersDashboard.displayPublishers(publisher);
                         }
                         else if (choicePublisherDashboard == 2){
                             System.out.print("Publisher ID: ");
                             int id = scanner.nextInt();
                             scanner.nextLine();
                             Publisher publisher = publisherDAO.getSpecificPublisher(id);
-                            adminDAO.displaySpecificPublisher(publisher);
+                            publishersDashboard.displaySpecificPublisher(publisher);
                         }
                         else if (choicePublisherDashboard == 3){
                             scanner.nextLine();
                             System.out.print("Publisher's ID: ");
                             int id = scanner.nextInt();
-                            adminDAO.displayPublisherBooks(publisherDAO.getPublisherBooks(id));
+                            publishersDashboard.displayPublisherBooks(publisherDAO.getPublisherBooks(id));
                         }
                         else if (choicePublisherDashboard == 4){
                             Publisher publisher = publisherDAO.createPublisher(scanner);
@@ -137,7 +143,7 @@ public class Main {
                             else System.out.println("An error has occured");
                         }
                         else if (choicePublisherDashboard == 5){
-                            Publisher publisher = publisherDAO.createUpdateAuthor(scanner);
+                            Publisher publisher = publisherDAO.createUpdatePublisher(scanner);
                             if(publisherDAO.updatePublisher(publisher)) System.out.println("Publisher ID " + publisher.getId() + " Updated Successfully");
                             else System.out.println("An error has occurred");
                         }

@@ -16,9 +16,56 @@ import java.util.List;
 import java.util.Scanner;
 public class AdminDAOImplementation implements AdminDAO {
     Database database = new Database();
-    BookDAO bookDao = new BookDAOImplementation(database);
-
     Scanner scanner = new Scanner(System.in);
+
+    @Override
+    public void register(Admin admin) {
+        String query = "INSERT INTO admins (name, username, password) VALUES (?, ?, ?)";
+
+        if (isUsernameExists(admin.getUsername())) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+
+        try(Connection con = database.getConnection();
+            PreparedStatement pst = con.prepareStatement(query);){
+            String encryptedPassword = BCrypt.hashpw(admin.getPassword(), BCrypt.gensalt(12));
+            pst.setString(1, admin.getName());
+            pst.setString(2, admin.getUsername());
+            pst.setString(3, encryptedPassword);
+
+            int rowsInserted = pst.executeUpdate();
+
+            if(rowsInserted > 0){
+                System.out.println("Registered Successfully");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isUsernameExists(String username){
+        String query = "SELECT COUNT(*) count FROM admins WHERE username = ?";
+
+        try(Connection connection = database.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);){
+            preparedStatement.setString(1, username);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                int count = resultSet.getInt("count");
+                if(count > 0){
+                    return true;
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     @Override
     public byte frontDashboard(){
@@ -67,134 +114,6 @@ public class AdminDAOImplementation implements AdminDAO {
         return choice;
     }
 
-    public byte booksDashboard(){
-        System.out.println("++ Books ++");
-        System.out.println("[1] View Books");
-        System.out.println("[2] View Specific Book");
-        System.out.println("[3] Add Book");
-        System.out.println("[4] Update Book");
-        System.out.println("[5] Delete Book");
-        System.out.println("[6] Back");
-        System.out.println("-------------------------");
-        byte choice = scanner.nextByte();
-        scanner.nextLine();
-        return choice;
-    }
-    @Override
-    public void displayBooks(List<Book> books){
-        for(Book book : books){
-            System.out.println("Book ID: " + book.getId());
-            System.out.println("Book title: " + book.getTitle());
-            System.out.println("Book genre: " + book.getGenre());
-            System.out.println("Year: " + book.getYear());
-            System.out.println("Stock: " + book.getStock());
-            System.out.println("Author: " + book.getAuthor());
-            System.out.println("Publisher: " + book.getPublisher());
-            System.out.println("-----------------------------------");
-        }
-    }
-
-    public byte authorsDashboard(){
-        System.out.println("++ Authors ++");
-        System.out.println("[1] View Authors");
-        System.out.println("[2] View Specific Author");
-        System.out.println("[3] View Author Books");
-        System.out.println("[4] Add Author");
-        System.out.println("[5] Update Author");
-        System.out.println("[6] Delete Author");
-        System.out.println("[7] Back");
-        System.out.println("-------------------------");
-        byte choice = scanner.nextByte();
-        scanner.nextLine();
-        return choice;
-    }
-    @Override
-    public void displayAuthors(List<Author> authors){
-        for(Author author : authors){
-            System.out.println("Author's ID: " + author.getId());
-            System.out.println("Author's name: " + author.getName());
-            System.out.println("Author's email: " + author.getEmail());
-            System.out.println("-------------------------------------");
-        }
-    }
-
-    @Override
-    public void displaySpecificAuthor(Author author){
-        System.out.println("Author's ID: " + author.getId());
-        System.out.println("Author's name: " + author.getName());
-        System.out.println("Author's email: " + author.getEmail());
-    }
-    @Override
-    public void displayAuthorBooks(List<Author> author){
-        byte i = 1;
-        if(author == null || author.isEmpty()){ // i think isEmpty can handle this expression
-            System.out.println("Author has no books");
-        }
-        for(Author authorBooks : author){
-            if(i > 0){
-                System.out.println("Author name: " + authorBooks.getName());
-                System.out.println("Author email: " + authorBooks.getEmail());
-                i--;
-            }
-            System.out.println("------------------");
-            System.out.println(authorBooks.getBooks());
-            System.out.println("------------------");
-        }
-    }
-    @Override
-    public byte publishersDashboard(){
-        System.out.println("++ Publishers ++");
-        System.out.println("[1] View Publishers");
-        System.out.println("[2] View Specific Publisher");
-        System.out.println("[3] View Publisher Books");
-        System.out.println("[4] Add Publisher");
-        System.out.println("[5] Update Publisher");
-        System.out.println("[6] Delete Publisher");
-        System.out.println("[7] Back");
-        System.out.println("-------------------------");
-        byte choice = scanner.nextByte();
-        scanner.nextLine();
-        return choice;
-    }
-
-    @Override
-    public void displayPublishers(List<Publisher> publishers){
-        for(Publisher publisher : publishers){
-            System.out.println("Publisher's ID: " + publisher.getId());
-            System.out.println("Publisher's name: " + publisher.getName());
-            System.out.println("Publisher's email: " + publisher.getEmail());
-            System.out.println("Publisher's address: " + publisher.getAddress());
-            System.out.println("-----------------------------------");
-        }
-    }
-
-    @Override
-    public void displaySpecificPublisher(Publisher publisher){
-        System.out.println("Publisher's ID: " + publisher.getId());
-        System.out.println("Publisher's name: " + publisher.getName());
-        System.out.println("Publisher's email: " + publisher.getEmail());
-        System.out.println("Publisher's address: " + publisher.getAddress());
-    }
-
-    @Override
-    public void displayPublisherBooks(List<Publisher> publisher) {
-        byte i = 1;
-        if (publisher == null || publisher.isEmpty()) { // i think isEmpty can handle this expression
-            System.out.println("publisher has no books");
-        }
-        for (Publisher publisherBooks : publisher) {
-            if (i > 0) {
-                System.out.println("Publisher's name: " + publisherBooks.getName());
-                System.out.println("Publisher's email: " + publisherBooks.getEmail());
-                System.out.println("Publisher's address: " + publisherBooks.getAddress());
-                i--;
-            }
-            System.out.println("------------------");
-            System.out.println(publisherBooks.getBooks());
-            System.out.println("------------------");
-        }
-    }
-
     @Override
     public Admin logIn(String username, String password){
         String query = "SELECT * FROM admins WHERE username = ?";
@@ -224,53 +143,5 @@ public class AdminDAOImplementation implements AdminDAO {
         }
         return admin;
     }
-    @Override
-    public void register(Admin admin) {
-        String query = "INSERT INTO admins (name, username, password) VALUES (?, ?, ?)";
 
-        if (isUsernameExists(admin.getUsername())) {
-            throw new IllegalArgumentException("Username already exists");
-        }
-
-        try(Connection con = database.getConnection();
-        PreparedStatement pst = con.prepareStatement(query);){
-            String encryptedPassword = BCrypt.hashpw(admin.getPassword(), BCrypt.gensalt(12));
-            pst.setString(1, admin.getName());
-            pst.setString(2, admin.getUsername());
-            pst.setString(3, encryptedPassword);
-
-            int rowsInserted = pst.executeUpdate();
-
-            if(rowsInserted > 0){
-                System.out.println("Registered Successfully");
-            }
-
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private boolean isUsernameExists(String username){
-        String query = "SELECT COUNT(*) count FROM admins WHERE username = ?";
-
-        try(Connection connection = database.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);){
-            preparedStatement.setString(1, username);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if(resultSet.next()){
-                int count = resultSet.getInt("count");
-                if(count > 0){
-                    return true;
-                }
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
 }
