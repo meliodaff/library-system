@@ -18,7 +18,7 @@ public class ReturnBookDashboard {
         scanner.nextLine();
         System.out.print("Condition: ");
         String condition = scanner.nextLine();
-        returnBook = new ReturnBook(adminDAO.getAdminId(), transactionId, condition, returnBook.getBookId());
+        returnBook = new ReturnBook(adminDAO.getAdminId(), transactionId, condition /*,returnBook.getBookId() */); // eto yung tinanggal ko
         return returnBook;
     }
 }

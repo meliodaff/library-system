@@ -202,7 +202,7 @@ public class Main {
                         returnBook = returnBookDAO.returnBook(returnBook, adminDAO.getAdminId());
                         if(returnBook != null) {
                             returnBookDAO.plusStock(returnBook.getBookId()); // this doesnt work, why?
-                            System.out.println(returnBook.getBookId());
+                            //System.out.println(returnBook.getBookId());
                             returnBookDAO.updateBook(returnBook.getTransactionId());
                             System.out.println("Transaction ID: " + returnBook.getTransactionId() + " Returned Successfully");
                         }
