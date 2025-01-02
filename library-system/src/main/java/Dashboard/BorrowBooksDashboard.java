@@ -17,7 +17,7 @@ public class BorrowBooksDashboard {
     }
     public void displayBorrowedBooks(List<BorrowBook> borrowedBooks){
         for(BorrowBook borrowedBook : borrowedBooks){
-            System.out.println("ID: " + borrowedBook.getId());
+            System.out.println("Transaction ID: " + borrowedBook.getId());
             System.out.println("Student ID: " + borrowedBook.getStudentId());
             System.out.println("Book Title: " + borrowedBook.getTitle());
             System.out.println("Admin Name: " + borrowedBook.getAdminName());
@@ -25,15 +25,5 @@ public class BorrowBooksDashboard {
             System.out.println("Return Date: " + borrowedBook.getReturnDate());
             System.out.println("--------------------------------------------");
         }
-    }
-
-    public void displayBorrowedBooks(BorrowBook borrowedBook){
-            System.out.println("ID: " + borrowedBook.getId());
-            System.out.println("Student ID: " + borrowedBook.getStudentId());
-            System.out.println("Book Title: " + borrowedBook.getTitle());
-            System.out.println("Admin Name: " + borrowedBook.getAdminName());
-            System.out.println("Borrowed Date: " + borrowedBook.getBorrowedDate());
-            System.out.println("Return Date: " + borrowedBook.getReturnDate());
-            System.out.println("--------------------------------------------");
     }
 }

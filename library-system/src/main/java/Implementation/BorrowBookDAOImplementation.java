@@ -4,11 +4,9 @@ import Dao.AdminDAO;
 import Model.BorrowBook;
 import Dao.BorrowBookDAO;
 import Database.Database;
+import Model.ReturnBook;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -45,15 +43,16 @@ public class BorrowBookDAOImplementation implements BorrowBookDAO{
     }
 
     @Override
-    public BorrowBook specificBorrowedBook(String studentId){
+    public List<BorrowBook> specificBorrowedBook(String studentId){
         String query = "CALL getSpecificBorrowedBook(?)";
+        List<BorrowBook> borrowedBooks = new ArrayList<>();
         BorrowBook borrowedBook = null;
         try(Connection con = database.getConnection();
         CallableStatement cs = con.prepareCall(query)){
             cs.setString(1, studentId);
             ResultSet rs = cs.executeQuery();
 
-            if(rs.next()){
+            while(rs.next()){
                 int id = rs.getInt("id");
                 String studentID = rs.getString("student_id");
                 String title = rs.getString("title");
@@ -61,13 +60,13 @@ public class BorrowBookDAOImplementation implements BorrowBookDAO{
                 String borrowedDate = rs.getString("borrowed_date");
                 String returnDate=  rs.getString("return_date");
                 borrowedBook = new BorrowBook(id, studentID, title, adminName, borrowedDate, returnDate);
-
+                borrowedBooks.add(borrowedBook);
             }
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        return borrowedBook;
+        return borrowedBooks;
     }
 
     @Override
@@ -122,4 +121,18 @@ public class BorrowBookDAOImplementation implements BorrowBookDAO{
         return borrowBook;
     }
 
+    @Override
+    public void minusStack(int bookId){
+        String query = "UPDATE books SET stock = stock - 1 WHERE id = ?";
+
+        try(Connection con = database.getConnection();
+        PreparedStatement pst = con.prepareStatement(query);){
+            pst.setInt(1, bookId);
+            pst.executeUpdate();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 }

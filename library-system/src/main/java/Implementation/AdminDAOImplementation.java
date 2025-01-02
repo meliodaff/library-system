@@ -110,7 +110,8 @@ public class AdminDAOImplementation implements AdminDAO {
         System.out.println("[2] Authors");
         System.out.println("[3] Publishers");
         System.out.println("[4] Borrow Books");
-        System.out.println("[5] Logout");
+        System.out.println("[5] Return Books");
+        System.out.println("[6] Logout");
         byte choice = scanner.nextByte();
         return choice;
     }

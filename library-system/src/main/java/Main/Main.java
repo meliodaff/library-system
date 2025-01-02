@@ -1,16 +1,10 @@
 package Main;
 
 import Dao.*;
-import Dashboard.AuthorsDashboard;
-import Dashboard.BooksDashboard;
-import Dashboard.PublishersDashboard;
+import Dashboard.*;
 import Database.Database;
 import Implementation.*;
-import Model.Author;
-import Model.Book;
-import Model.BorrowBook;
-import Model.Publisher;
-import Dashboard.BorrowBooksDashboard;
+import Model.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -29,8 +23,12 @@ public class Main {
 
         BorrowBooksDashboard borrowBooksDashboard = new BorrowBooksDashboard();
         BorrowBookDAO borrowBookDAO = new BorrowBookDAOImplementation();
+        ReturnBook returnBook = new ReturnBook();
 
         //Publisher publisher = new Publisher();
+
+        ReturnBookDashboard returnBookDashboard = new ReturnBookDashboard();
+        ReturnBookDAO returnBookDAO = new ReturnBookDAOImplementation();
         while(true){
         int chooseDashboard = adminDAO.frontDashboard();
         if(chooseDashboard == 1){
@@ -172,7 +170,7 @@ public class Main {
                             scanner.nextLine();
                             System.out.print("Student ID: ");
                             String studentId = scanner.nextLine();
-                            BorrowBook borrowedBook = borrowBookDAO.specificBorrowedBook(studentId);
+                            List<BorrowBook> borrowedBook = borrowBookDAO.specificBorrowedBook(studentId);
                             borrowBooksDashboard.displayBorrowedBooks(borrowedBook);
                         }
                         else if (choiceBorrowBookDashboard == 3){
@@ -185,6 +183,7 @@ public class Main {
                                 borrowBook.setBookId(bookId);
                                 borrowBook.setAdminId(adminDAO.getAdminId());
                                 if(borrowBookDAO.borrowBook(borrowBook)) {
+                                    borrowBookDAO.minusStack(bookId);
                                     System.out.println("Book ID: " + bookId + " Successfully borrowed By Student ID: " + borrowBook.getStudentId());
                                 }
                                 else System.out.println("An error has occurred");
@@ -198,6 +197,22 @@ public class Main {
                     }
                 }
                 else if (choiceAdminDashboard == 5){
+                    returnBook = returnBookDashboard.displayReturnBook(scanner, returnBook);
+                    if(returnBookDAO.checkTransactionId(returnBook.getTransactionId(), returnBook)){
+                        returnBook = returnBookDAO.returnBook(returnBook, adminDAO.getAdminId());
+                        if(returnBook != null) {
+                            returnBookDAO.plusStock(returnBook.getBookId()); // this doesnt work, why?
+                            System.out.println(returnBook.getBookId());
+                            returnBookDAO.updateBook(returnBook.getTransactionId());
+                            System.out.println("Transaction ID: " + returnBook.getTransactionId() + " Returned Successfully");
+                        }
+                    }
+                    else{
+                        System.out.println("Transaction ID does not exist");
+                    }
+
+                }
+                else if (choiceAdminDashboard == 6){
                     break;
                 }
             }
