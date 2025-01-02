@@ -1,20 +1,16 @@
 package Main;
 
-import Dao.AdminDAO;
-import Dao.AuthorDAO;
-import Dao.BookDAO;
-import Dao.PublisherDAO;
+import Dao.*;
 import Dashboard.AuthorsDashboard;
 import Dashboard.BooksDashboard;
 import Dashboard.PublishersDashboard;
 import Database.Database;
-import Implementation.AdminDAOImplementation;
-import Implementation.AuthorDAOImplementation;
-import Implementation.BookDAOImplementation;
-import Implementation.PublisherDAOImplementation;
+import Implementation.*;
 import Model.Author;
 import Model.Book;
+import Model.BorrowBook;
 import Model.Publisher;
+import Dashboard.BorrowBooksDashboard;
 
 import java.util.List;
 import java.util.Scanner;
@@ -31,6 +27,10 @@ public class Main {
         AuthorsDashboard authorsDashboard = new AuthorsDashboard();
         PublishersDashboard publishersDashboard = new PublishersDashboard();
 
+        BorrowBooksDashboard borrowBooksDashboard = new BorrowBooksDashboard();
+        BorrowBookDAO borrowBookDAO = new BorrowBookDAOImplementation();
+
+        //Publisher publisher = new Publisher();
         while(true){
         int chooseDashboard = adminDAO.frontDashboard();
         if(chooseDashboard == 1){
@@ -128,17 +128,17 @@ public class Main {
                             System.out.print("Publisher ID: ");
                             int id = scanner.nextInt();
                             scanner.nextLine();
-                            Publisher publisher = publisherDAO.getSpecificPublisher(id);
+                            Publisher publisher = publisherDAO.getSpecificPublisher(id); // should i do this or
                             publishersDashboard.displaySpecificPublisher(publisher);
                         }
                         else if (choicePublisherDashboard == 3){
-                            scanner.nextLine();
                             System.out.print("Publisher's ID: ");
                             int id = scanner.nextInt();
+                            scanner.nextLine();
                             publishersDashboard.displayPublisherBooks(publisherDAO.getPublisherBooks(id));
                         }
                         else if (choicePublisherDashboard == 4){
-                            Publisher publisher = publisherDAO.createPublisher(scanner);
+                            Publisher publisher = publisherDAO.createPublisher(scanner); // should i do this?
                             if(publisherDAO.addPublisher(publisher)) System.out.println("Publisher name " + publisher.getName() + " Inserted Successfully");
                             else System.out.println("An error has occured");
                         }
@@ -161,7 +161,43 @@ public class Main {
 
 
                 }
-                else if (choiceAdminDashboard == 4){
+                else if (choiceAdminDashboard == 4) {
+                    while(true){
+                        byte choiceBorrowBookDashboard = borrowBooksDashboard.borrowBooksDashboard(scanner);
+                        if(choiceBorrowBookDashboard == 1){
+                            List<BorrowBook> borrowedBooks = borrowBookDAO.borrowedBooks();
+                            borrowBooksDashboard.displayBorrowedBooks(borrowedBooks);
+                        }
+                        else if (choiceBorrowBookDashboard == 2){
+                            scanner.nextLine();
+                            System.out.print("Student ID: ");
+                            String studentId = scanner.nextLine();
+                            BorrowBook borrowedBook = borrowBookDAO.specificBorrowedBook(studentId);
+                            borrowBooksDashboard.displayBorrowedBooks(borrowedBook);
+                        }
+                        else if (choiceBorrowBookDashboard == 3){
+                            scanner.nextLine();
+                            System.out.print("Book ID: ");
+                            int bookId = scanner.nextInt();
+                            scanner.nextLine();
+                            if(borrowBookDAO.checkAvailability(bookId)){
+                                BorrowBook borrowBook = borrowBookDAO.createBorrowBook(scanner);
+                                borrowBook.setBookId(bookId);
+                                borrowBook.setAdminId(adminDAO.getAdminId());
+                                if(borrowBookDAO.borrowBook(borrowBook)) {
+                                    System.out.println("Book ID: " + bookId + " Successfully borrowed By Student ID: " + borrowBook.getStudentId());
+                                }
+                                else System.out.println("An error has occurred");
+                            }
+                            else System.out.println("Book ID: " + bookId + " has no stocks");
+
+                        }
+                        else if (choiceBorrowBookDashboard == 9){
+                            break;
+                        }
+                    }
+                }
+                else if (choiceAdminDashboard == 5){
                     break;
                 }
             }

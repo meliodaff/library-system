@@ -17,7 +17,7 @@ public class Publisher extends Author {
     private int id;
     private String address;
     private List<Book> books;
-
+    // use composition or not??
     public Publisher(int id, String name, String email, String address){
         super(name, email);
         this.id = id;
@@ -27,5 +27,4 @@ public class Publisher extends Author {
         super(name, email);
         this.address = address;
     }
-
 }

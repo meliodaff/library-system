@@ -109,9 +109,17 @@ public class AdminDAOImplementation implements AdminDAO {
         System.out.println("[1] Books");
         System.out.println("[2] Authors");
         System.out.println("[3] Publishers");
-        System.out.println("[4] Logout");
+        System.out.println("[4] Borrow Books");
+        System.out.println("[5] Logout");
         byte choice = scanner.nextByte();
         return choice;
+    }
+
+    private int id;
+
+    @Override
+    public int getAdminId(){
+        return id;
     }
 
     @Override
@@ -129,6 +137,7 @@ public class AdminDAOImplementation implements AdminDAO {
                 String encryptedPassword = rs.getString("password");
                 if(BCrypt.checkpw(password, encryptedPassword)){
                     admin = new Admin(rs.getString("name"), username, encryptedPassword);
+                    id = rs.getInt("id");
                 }
                 else{
                     System.out.println("Invalid Password");

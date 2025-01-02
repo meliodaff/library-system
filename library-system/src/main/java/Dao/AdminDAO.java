@@ -13,4 +13,5 @@ public interface AdminDAO {
     byte adminDashboard();
     byte frontDashboard();
     void registerDashboard();
+    int getAdminId();
 }
