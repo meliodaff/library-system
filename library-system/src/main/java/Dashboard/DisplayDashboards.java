@@ -184,7 +184,7 @@ public class DisplayDashboards {
                 else System.out.println("Book ID: " + bookId + " has no stocks");
 
             }
-            else if (choiceBorrowBookDashboard == 9){
+            else if (choiceBorrowBookDashboard == 4){
                 break;
             }
         }
