@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PublishersDashboard {
-    Scanner scanner = new Scanner(System.in);
-    public byte publishersDashboard(){
+
+    public byte publishersDashboard(Scanner scanner){
         System.out.println("++ Publishers ++");
         System.out.println("[1] View Publishers");
         System.out.println("[2] View Specific Publisher");

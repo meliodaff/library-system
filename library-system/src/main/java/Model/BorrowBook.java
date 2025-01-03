@@ -29,13 +29,6 @@ public class BorrowBook {
         this.returnDate = returnDate;
     }
 
-    public BorrowBook(String studentId, int bookId, int adminId, String returnDate) {
-        this.studentId = studentId;
-        this.bookId = bookId;
-        this.adminId = adminId;
-        this.returnDate = returnDate;
-    }
-
     public BorrowBook(String studentId, int adminId, String returnDate) {
         this.studentId = studentId;
         this.adminId = adminId;
