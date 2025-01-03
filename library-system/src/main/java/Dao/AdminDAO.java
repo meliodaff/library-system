@@ -14,4 +14,6 @@ public interface AdminDAO {
     byte frontDashboard();
     void registerDashboard();
     int getAdminId();
+    boolean validateSuperAdmin(String username, String password);
+
 }

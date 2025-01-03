@@ -66,7 +66,6 @@ public class AdminDAOImplementation implements AdminDAO {
         return false;
     }
 
-
     @Override
     public byte frontDashboard(){
         System.out.println("Welcome to book buddy");
@@ -119,7 +118,7 @@ public class AdminDAOImplementation implements AdminDAO {
     private int id;
 
     @Override
-    public int getAdminId(){
+    public int getAdminId(){ // for the borrowed_admin_id and the returned_admin_id
         return id;
     }
 
@@ -152,6 +151,23 @@ public class AdminDAOImplementation implements AdminDAO {
             e.printStackTrace();
         }
         return admin;
+    }
+
+    public boolean validateSuperAdmin(String username, String password){
+
+        String query = "SELECT username, password FROM super_admins WHERE username = ?";
+
+        try(Connection con = database.getConnection();
+        PreparedStatement pst = con.prepareStatement(query);){
+
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 }
