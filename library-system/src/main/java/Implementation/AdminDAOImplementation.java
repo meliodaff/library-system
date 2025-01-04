@@ -153,13 +153,21 @@ public class AdminDAOImplementation implements AdminDAO {
         return admin;
     }
 
-    public boolean validateSuperAdmin(String username, String password){
-
-        String query = "SELECT username, password FROM super_admins WHERE username = ?";
-
+    @Override
+    public Admin validateSuperAdmin(String username, String password){
+        String query = "SELECT * FROM admins WHERE username = ? AND id = 1";
+        Admin admin = null;
         try(Connection con = database.getConnection();
         PreparedStatement pst = con.prepareStatement(query);){
+        pst.setString(1, username);
+        ResultSet rs = pst.executeQuery();
 
+        if(rs.next()){ // isa lang super admin syug?
+            String encryptedPassword = rs.getString("password");
+            if(BCrypt.checkpw(password, encryptedPassword)){
+                admin = new Admin(rs.getString("name"), username, encryptedPassword);
+            }
+        }
 
 
         }
@@ -167,7 +175,15 @@ public class AdminDAOImplementation implements AdminDAO {
             e.printStackTrace();
         }
 
-        return false;
+        return admin;
     }
 
+    @Override
+    public Admin displaySuperAdmin(Scanner scanner){
+        System.out.print("Super Admin Username: ");
+        String username = scanner.nextLine();
+        System.out.print("Super Admin Password: ");
+        String password = scanner.nextLine();
+        return new Admin(username, password);
+    }
 }

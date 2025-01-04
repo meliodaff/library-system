@@ -1,10 +1,6 @@
 package Dao;
 import Model.Admin;
-import Model.Author;
-import Model.Book;
-import Model.Publisher;
-
-import java.util.List;
+import java.util.Scanner;
 
 public interface AdminDAO {
     void register(Admin admin);
@@ -14,6 +10,7 @@ public interface AdminDAO {
     byte frontDashboard();
     void registerDashboard();
     int getAdminId();
-    boolean validateSuperAdmin(String username, String password);
+    Admin validateSuperAdmin(String username, String password);
+    Admin displaySuperAdmin(Scanner scanner);
 
 }

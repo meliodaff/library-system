@@ -3,6 +3,9 @@ package Main;
 import Dao.AdminDAO;
 import Dashboard.DisplayDashboards;
 import Implementation.AdminDAOImplementation;
+import Model.Admin;
+
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,6 +13,7 @@ public class Main {
         AdminDAO adminDAO = new AdminDAOImplementation();
 
         DisplayDashboards displayDashboards = new DisplayDashboards();
+        Scanner scanner = new Scanner(System.in);
 
         while(true){
         int chooseDashboard = adminDAO.frontDashboard();
@@ -41,7 +45,12 @@ public class Main {
             }
         }
         else if (chooseDashboard == 2){
-            adminDAO.registerDashboard();
+            Admin admin = adminDAO.displaySuperAdmin(scanner);
+            if(adminDAO.validateSuperAdmin(admin.getUsername(), admin.getPassword()) != null){
+                adminDAO.registerDashboard();
+            }
+            else System.out.println("Wrong Super Admin");
+
         }
         }
 
