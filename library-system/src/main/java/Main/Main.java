@@ -2,6 +2,7 @@ package Main;
 
 import Dao.AdminDAO;
 import Dashboard.DisplayDashboards;
+import Dashboard.LogInDashboard;
 import Implementation.AdminDAOImplementation;
 import Model.Admin;
 
@@ -11,19 +12,19 @@ public class Main {
     public static void main(String[] args) {
 
         AdminDAO adminDAO = new AdminDAOImplementation();
-
         DisplayDashboards displayDashboards = new DisplayDashboards();
+        LogInDashboard logInDashboard = new LogInDashboard();
         Scanner scanner = new Scanner(System.in);
 
         while(true){
-        int chooseDashboard = adminDAO.frontDashboard();
+        int chooseDashboard = logInDashboard.frontDashboard(scanner);
         if(chooseDashboard == 1){
-            if (adminDAO.loginDashboard() == null) {
+            if (logInDashboard.loginDashboard(scanner, adminDAO) == null) {
                 return;
             }
             System.out.println("Login successful!");
             while(true) {
-                byte choiceAdminDashboard = adminDAO.adminDashboard();
+                byte choiceAdminDashboard = logInDashboard.adminDashboard(scanner);
                 if (choiceAdminDashboard == 1) {
                     displayDashboards.displayOne();
                 }
@@ -45,9 +46,9 @@ public class Main {
             }
         }
         else if (chooseDashboard == 2){
-            Admin admin = adminDAO.displaySuperAdmin(scanner);
+            Admin admin = logInDashboard.displaySuperAdmin(scanner);
             if(adminDAO.validateSuperAdmin(admin.getUsername(), admin.getPassword()) != null){
-                adminDAO.registerDashboard();
+                logInDashboard.registerDashboard(adminDAO ,scanner);
             }
             else System.out.println("Wrong Super Admin");
 

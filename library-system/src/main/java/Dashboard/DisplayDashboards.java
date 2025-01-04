@@ -28,12 +28,12 @@ public class DisplayDashboards {
             }
             else if (chooseBooksDashboard == 3) {
                 scanner.nextLine();
-                Book book = bookDao.createBook(scanner);
+                Book book = booksDashboard.createBook(scanner);
                 if(bookDao.addBook(book)) System.out.println("Added successfully");
                 else System.out.println("An error has occurred");
             }
             else if (chooseBooksDashboard == 4){
-                Book book = bookDao.createUpdateBook(scanner);
+                Book book = booksDashboard.createUpdateBook(scanner, booksDashboard);
                 if(bookDao.updateBook(book)) System.out.println("Book ID " + book.getId() + " Updated Successfully");
                 else System.out.println("An error has occurred");
             }

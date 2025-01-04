@@ -3,14 +3,11 @@ import Model.Admin;
 import java.util.Scanner;
 
 public interface AdminDAO {
+
     void register(Admin admin);
+    boolean isUsernameExists(String username);
     Admin logIn(String username, String password);
-    Admin loginDashboard();
-    byte adminDashboard();
-    byte frontDashboard();
-    void registerDashboard();
     int getAdminId();
     Admin validateSuperAdmin(String username, String password);
-    Admin displaySuperAdmin(Scanner scanner);
 
 }

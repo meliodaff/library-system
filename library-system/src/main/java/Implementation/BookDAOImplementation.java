@@ -1,6 +1,7 @@
 package Implementation;
 
 import Dao.BookDAO;
+import Dashboard.BooksDashboard;
 import Database.Database;
 import Model.Book;
 
@@ -84,6 +85,7 @@ public class BookDAOImplementation implements BookDAO {
         return null;
     } // to prevent the user from typing String instead of int. can be better
      */
+
     @Override
     public boolean addBook(Book book){
         String query = "INSERT INTO books (title, genre, year, stock, author_id, publisher_id) VALUES (?, ?, ?, ?, ?, ?)";
@@ -110,26 +112,8 @@ public class BookDAOImplementation implements BookDAO {
         return false;
     }
 
-    @Override
-    public Book createBook(Scanner scanner){
-        System.out.print("Book title: ");
-        String title = scanner.nextLine();
-        System.out.print("Book genre: ");
-        String genre = scanner.nextLine();
-        System.out.print("Book year (yyyy-mm-dd): ");
-        String year = scanner.nextLine();
-        System.out.print("Stock: ");
-        short stock = scanner.nextShort();
-        scanner.nextLine(); // consume buffer line
-        System.out.print("Author ID: ");
-        short authorId = scanner.nextShort();
-        scanner.nextLine();
-        System.out.print("Publisher ID: ");
-        short publisherId = scanner.nextShort();
-        scanner.nextLine();
-        Book book = new Book(title, genre, year, stock, authorId, publisherId);
-        return book;
-        }
+
+
 
 
     @Override
@@ -154,16 +138,6 @@ public class BookDAOImplementation implements BookDAO {
             e.printStackTrace();
         }
     return false;
-    }
-
-    @Override
-    public Book createUpdateBook(Scanner scanner){
-        System.out.print("Book ID: ");
-        int bookId = scanner.nextInt();
-        scanner.nextLine();
-        Book book = createBook(scanner);
-        book.setId(bookId);
-        return book;
     }
 
     @Override
