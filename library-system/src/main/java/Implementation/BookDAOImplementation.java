@@ -1,18 +1,16 @@
 package Implementation;
 
 import Dao.BookDAO;
-import Dashboard.BooksDashboard;
 import Database.Database;
 import Model.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class BookDAOImplementation implements BookDAO {
-    private Database database;
 
+    private Database database;
     public BookDAOImplementation(Database database){
         this.database = database;
     }
@@ -68,7 +66,7 @@ public class BookDAOImplementation implements BookDAO {
         catch (Exception e){
             e.printStackTrace();
         }
-        if(book == null){
+        if(book == null){ // does not follow in the SRP principle?
             throw new IllegalArgumentException("No record was found");
         }
         return book;
