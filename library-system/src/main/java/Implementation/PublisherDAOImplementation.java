@@ -172,30 +172,6 @@ public class PublisherDAOImplementation implements PublisherDAO {
         return publishers;
     }
 
-    @Override
-    public Publisher createPublisher(Scanner scanner) {
-        System.out.print("Publisher's name: ");
-        String name = scanner.nextLine();
-        System.out.print("Publisher's email: ");
-        String email = scanner.nextLine();
-        System.out.print("Publisher's address: ");
-        String address = scanner.nextLine();
-        Publisher publisher = new Publisher(name, email, address);
-        return publisher;
-    }
 
-    @Override
-    public Publisher createUpdatePublisher(Scanner scanner) {
-        System.out.print("Publisher's ID: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Publisher's name: ");
-        String name = scanner.nextLine();
-        System.out.print("Publisher's email: ");
-        String email = scanner.nextLine();
-        System.out.print("Publisher's address: ");
-        String address = scanner.nextLine();
-        Publisher publisher = new Publisher(id, name, email, address);
-        return publisher;
-    }
+
 }

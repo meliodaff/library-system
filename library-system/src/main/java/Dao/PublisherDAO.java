@@ -12,7 +12,5 @@ public interface PublisherDAO {
     boolean updatePublisher(Publisher publisher);
     boolean deletePublisher(int id);
     List<Publisher> getPublisherBooks(int id);
-    Publisher createPublisher(Scanner scanner);
-    Publisher createUpdatePublisher(Scanner scanner);
 
 }

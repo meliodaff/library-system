@@ -9,7 +9,6 @@ public interface BorrowBookDAO {
     List<BorrowBook> borrowedBooks();
     List<BorrowBook> specificBorrowedBook(String studentId);
     boolean borrowBook(BorrowBook borrowBook);
-    BorrowBook createBorrowBook(Scanner scanner);
     boolean checkAvailability(int bookId);
     void minusStack(int bookId);
 

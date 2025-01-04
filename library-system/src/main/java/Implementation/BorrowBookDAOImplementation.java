@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 public class BorrowBookDAOImplementation implements BorrowBookDAO{
     Database database = new Database();
-    AdminDAO adminDAO = new AdminDAOImplementation();
 
     @Override
     public List<BorrowBook> borrowedBooks(){
@@ -111,15 +110,7 @@ public class BorrowBookDAOImplementation implements BorrowBookDAO{
     return false;
     }
 
-    @Override
-    public BorrowBook createBorrowBook(Scanner scanner){
-        System.out.print("Student ID: ");
-        String studentId = scanner.nextLine();
-        System.out.print("Return Date (YYY-mm-dd): ");
-        String returnDate = scanner.nextLine();
-        BorrowBook borrowBook = new BorrowBook(studentId, adminDAO.getAdminId(), returnDate);
-        return borrowBook;
-    }
+
 
     @Override
     public void minusStack(int bookId){

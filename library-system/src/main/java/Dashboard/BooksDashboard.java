@@ -1,5 +1,7 @@
 package Dashboard;
+import Dao.AdminDAO;
 import Model.Book;
+import Model.BorrowBook;
 
 import java.util.List;
 import java.util.Scanner;
@@ -61,4 +63,14 @@ public class BooksDashboard {
         book.setId(bookId);
         return book;
     }
+
+    public BorrowBook createBorrowBook(Scanner scanner, AdminDAO adminDAO){
+        System.out.print("Student ID: ");
+        String studentId = scanner.nextLine();
+        System.out.print("Return Date (YYY-mm-dd): ");
+        String returnDate = scanner.nextLine();
+        BorrowBook borrowBook = new BorrowBook(studentId, adminDAO.getAdminId(), returnDate);
+        return borrowBook;
+    }
+
 }

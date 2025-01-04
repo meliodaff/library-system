@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DisplayDashboards {
+    BooksDashboard booksDashboard = new BooksDashboard();
+
     public void displayOne(){
         BooksDashboard booksDashboard = new BooksDashboard();
         Database database = new Database();
@@ -125,12 +127,12 @@ public class DisplayDashboards {
                 publishersDashboard.displayPublisherBooks(publisherDAO.getPublisherBooks(id));
             }
             else if (choicePublisherDashboard == 4){
-                Publisher publisher = publisherDAO.createPublisher(scanner); // should i do this?
+                Publisher publisher = publishersDashboard.createPublisher(scanner); // should i do this?
                 if(publisherDAO.addPublisher(publisher)) System.out.println("Publisher name " + publisher.getName() + " Inserted Successfully");
                 else System.out.println("An error has occured");
             }
             else if (choicePublisherDashboard == 5){
-                Publisher publisher = publisherDAO.createUpdatePublisher(scanner);
+                Publisher publisher = publishersDashboard.createUpdatePublisher(scanner);
                 if(publisherDAO.updatePublisher(publisher)) System.out.println("Publisher ID " + publisher.getId() + " Updated Successfully");
                 else System.out.println("An error has occurred");
             }
@@ -172,7 +174,7 @@ public class DisplayDashboards {
                 int bookId = scanner.nextInt();
                 scanner.nextLine();
                 if(borrowBookDAO.checkAvailability(bookId)){
-                    BorrowBook borrowBook = borrowBookDAO.createBorrowBook(scanner);
+                    BorrowBook borrowBook = booksDashboard.createBorrowBook(scanner, adminDAO);
                     borrowBook.setBookId(bookId);
                     borrowBook.setAdminId(adminDAO.getAdminId());
                     if(borrowBookDAO.borrowBook(borrowBook)) {
@@ -197,7 +199,7 @@ public class DisplayDashboards {
         Scanner scanner = new Scanner(System.in);
         AdminDAO adminDAO = new AdminDAOImplementation();
 
-        returnBook = returnBookDashboard.displayReturnBook(scanner, returnBook);
+        returnBook = returnBookDashboard.displayReturnBook(scanner);
         if(returnBookDAO.checkTransactionId(returnBook.getTransactionId(), returnBook)){
             returnBook = returnBookDAO.returnBook(returnBook, adminDAO.getAdminId());
             if(returnBook != null) {
