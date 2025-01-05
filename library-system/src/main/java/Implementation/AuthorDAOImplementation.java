@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AuthorDAOImplementation implements AuthorDAO {
-    Database database = new Database();
+    private Database database;
+
     public AuthorDAOImplementation(Database database){
         this.database = database;
     }
@@ -96,7 +97,7 @@ public class AuthorDAOImplementation implements AuthorDAO {
         String name = scanner.nextLine();
         System.out.print("Author's email: ");
         String email = scanner.nextLine();
-        Author author = new Author(name, email);
+        Author author = new Author(name, email); // SRP principle does not follow
         return author;
     }
 
@@ -126,7 +127,7 @@ public class AuthorDAOImplementation implements AuthorDAO {
         String name = scanner.nextLine();
         System.out.print("Author's email: ");
         String email = scanner.nextLine();
-        Author author = new Author(id, name, email);
+        Author author = new Author(id, name, email); // SRP principle does not follow
         return author;
     }
 

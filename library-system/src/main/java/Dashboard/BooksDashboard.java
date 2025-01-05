@@ -1,5 +1,7 @@
 package Dashboard;
+import Dao.AdminDAO;
 import Model.Book;
+import Model.BorrowBook;
 
 import java.util.List;
 import java.util.Scanner;
@@ -32,4 +34,43 @@ public class BooksDashboard {
             System.out.println("-----------------------------------");
         }
     }
+
+    public Book createBook(Scanner scanner){
+        System.out.print("Book title: ");
+        String title = scanner.nextLine();
+        System.out.print("Book genre: ");
+        String genre = scanner.nextLine();
+        System.out.print("Book year (yyyy-mm-dd): ");
+        String year = scanner.nextLine();
+        System.out.print("Stock: ");
+        short stock = scanner.nextShort();
+        scanner.nextLine(); // consume buffer line
+        System.out.print("Author ID: ");
+        short authorId = scanner.nextShort();
+        scanner.nextLine();
+        System.out.print("Publisher ID: ");
+        short publisherId = scanner.nextShort();
+        scanner.nextLine();
+        Book book = new Book(title, genre, year, stock, authorId, publisherId); // does not followw SRP principle
+        return book;
+    }
+
+    public Book createUpdateBook(Scanner scanner, BooksDashboard booksDashboard){
+        System.out.print("Book ID: ");
+        int bookId = scanner.nextInt();
+        scanner.nextLine();
+        Book book = booksDashboard.createBook(scanner);
+        book.setId(bookId);
+        return book;
+    }
+
+    public BorrowBook createBorrowBook(Scanner scanner, AdminDAO adminDAO){
+        System.out.print("Student ID: ");
+        String studentId = scanner.nextLine();
+        System.out.print("Return Date (YYY-mm-dd): ");
+        String returnDate = scanner.nextLine();
+        BorrowBook borrowBook = new BorrowBook(studentId, adminDAO.getAdminId(), returnDate);
+        return borrowBook;
+    }
+
 }

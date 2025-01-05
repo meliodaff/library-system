@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DisplayDashboards {
+    BooksDashboard booksDashboard = new BooksDashboard();
+
     public void displayOne(){
         BooksDashboard booksDashboard = new BooksDashboard();
         Database database = new Database();
@@ -28,12 +30,12 @@ public class DisplayDashboards {
             }
             else if (chooseBooksDashboard == 3) {
                 scanner.nextLine();
-                Book book = bookDao.createBook(scanner);
+                Book book = booksDashboard.createBook(scanner);
                 if(bookDao.addBook(book)) System.out.println("Added successfully");
                 else System.out.println("An error has occurred");
             }
             else if (chooseBooksDashboard == 4){
-                Book book = bookDao.createUpdateBook(scanner);
+                Book book = booksDashboard.createUpdateBook(scanner, booksDashboard);
                 if(bookDao.updateBook(book)) System.out.println("Book ID " + book.getId() + " Updated Successfully");
                 else System.out.println("An error has occurred");
             }
@@ -125,12 +127,12 @@ public class DisplayDashboards {
                 publishersDashboard.displayPublisherBooks(publisherDAO.getPublisherBooks(id));
             }
             else if (choicePublisherDashboard == 4){
-                Publisher publisher = publisherDAO.createPublisher(scanner); // should i do this?
+                Publisher publisher = publishersDashboard.createPublisher(scanner); // should i do this?
                 if(publisherDAO.addPublisher(publisher)) System.out.println("Publisher name " + publisher.getName() + " Inserted Successfully");
                 else System.out.println("An error has occured");
             }
             else if (choicePublisherDashboard == 5){
-                Publisher publisher = publisherDAO.createUpdatePublisher(scanner);
+                Publisher publisher = publishersDashboard.createUpdatePublisher(scanner);
                 if(publisherDAO.updatePublisher(publisher)) System.out.println("Publisher ID " + publisher.getId() + " Updated Successfully");
                 else System.out.println("An error has occurred");
             }
@@ -172,7 +174,7 @@ public class DisplayDashboards {
                 int bookId = scanner.nextInt();
                 scanner.nextLine();
                 if(borrowBookDAO.checkAvailability(bookId)){
-                    BorrowBook borrowBook = borrowBookDAO.createBorrowBook(scanner);
+                    BorrowBook borrowBook = booksDashboard.createBorrowBook(scanner, adminDAO);
                     borrowBook.setBookId(bookId);
                     borrowBook.setAdminId(adminDAO.getAdminId());
                     if(borrowBookDAO.borrowBook(borrowBook)) {
@@ -184,20 +186,19 @@ public class DisplayDashboards {
                 else System.out.println("Book ID: " + bookId + " has no stocks");
 
             }
-            else if (choiceBorrowBookDashboard == 9){
+            else if (choiceBorrowBookDashboard == 4){
                 break;
             }
         }
     }
 
     public void displayFive(){
-        ReturnBook returnBook = new ReturnBook();
         ReturnBookDashboard returnBookDashboard = new ReturnBookDashboard();
         ReturnBookDAO returnBookDAO = new ReturnBookDAOImplementation();
         Scanner scanner = new Scanner(System.in);
         AdminDAO adminDAO = new AdminDAOImplementation();
 
-        returnBook = returnBookDashboard.displayReturnBook(scanner, returnBook);
+        ReturnBook returnBook = returnBookDashboard.displayReturnBook(scanner);
         if(returnBookDAO.checkTransactionId(returnBook.getTransactionId(), returnBook)){
             returnBook = returnBookDAO.returnBook(returnBook, adminDAO.getAdminId());
             if(returnBook != null) {

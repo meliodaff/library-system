@@ -56,4 +56,29 @@ public class PublishersDashboard {
             System.out.println("------------------");
         }
     }
+
+    public Publisher createPublisher(Scanner scanner) {
+        System.out.print("Publisher's name: ");
+        String name = scanner.nextLine();
+        System.out.print("Publisher's email: ");
+        String email = scanner.nextLine();
+        System.out.print("Publisher's address: ");
+        String address = scanner.nextLine();
+        Publisher publisher = new Publisher(name, email, address); // SRP principle does not follow
+        return publisher;
+    }
+
+    public Publisher createUpdatePublisher(Scanner scanner) {
+        System.out.print("Publisher's ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Publisher's name: ");
+        String name = scanner.nextLine();
+        System.out.print("Publisher's email: ");
+        String email = scanner.nextLine();
+        System.out.print("Publisher's address: ");
+        String address = scanner.nextLine();
+        Publisher publisher = new Publisher(id, name, email, address);
+        return publisher;
+    }
 }
