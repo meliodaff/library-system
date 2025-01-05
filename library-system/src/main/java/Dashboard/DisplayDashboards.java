@@ -193,13 +193,12 @@ public class DisplayDashboards {
     }
 
     public void displayFive(){
-        ReturnBook returnBook = new ReturnBook();
         ReturnBookDashboard returnBookDashboard = new ReturnBookDashboard();
         ReturnBookDAO returnBookDAO = new ReturnBookDAOImplementation();
         Scanner scanner = new Scanner(System.in);
         AdminDAO adminDAO = new AdminDAOImplementation();
 
-        returnBook = returnBookDashboard.displayReturnBook(scanner);
+        ReturnBook returnBook = returnBookDashboard.displayReturnBook(scanner);
         if(returnBookDAO.checkTransactionId(returnBook.getTransactionId(), returnBook)){
             returnBook = returnBookDAO.returnBook(returnBook, adminDAO.getAdminId());
             if(returnBook != null) {
